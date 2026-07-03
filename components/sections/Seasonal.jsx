@@ -72,11 +72,13 @@ export default function Seasonal() {
             {/* Visual */}
             <Reveal delay={0.1} className="relative">
               <Placeholder
+                src={seasonal.img}
+                alt={seasonal.alt}
                 art="cakeSlice"
                 tone="gold"
-                float
                 aspect="aspect-[5/4]"
                 rounded="rounded-[2rem]"
+                sizes="(max-width: 1024px) 90vw, 40vw"
                 className="ring-1 ring-cream/10"
                 label={seasonal.photo}
               />

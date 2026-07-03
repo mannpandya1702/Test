@@ -38,10 +38,14 @@ export default function Gallery() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Placeholder
+                  src={g.img}
+                  alt={g.alt}
                   art={g.art}
                   tone={g.tone}
                   aspect={aspectFor(g.span)}
                   rounded="rounded-2xl"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  showTag={false}
                   label={g.photo}
                 />
               </motion.div>

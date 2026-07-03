@@ -1,6 +1,6 @@
 "use client";
 
-import { business, highlights } from "@/lib/data";
+import { business, highlights, aboutImages } from "@/lib/data";
 import Reveal from "@/components/ui/Reveal";
 import Placeholder from "@/components/ui/Placeholder";
 
@@ -26,29 +26,38 @@ export default function About() {
         <Reveal className="relative order-2 lg:order-1">
           <div className="relative mx-auto max-w-md lg:mx-0 lg:max-w-none">
             <Placeholder
+              src={aboutImages.counter.src}
+              alt={aboutImages.counter.alt}
               art="cheesecake"
               tone="caramel"
               aspect="aspect-[4/5]"
               rounded="rounded-[2.25rem]"
+              sizes="(max-width: 1024px) 90vw, 45vw"
               className="shadow-lift ring-1 ring-espresso/[0.04]"
               label="Our counter: a case of cheesecakes, pastries and cakes"
             />
             <div className="absolute -bottom-8 -right-4 w-40 sm:w-52 lg:-right-10">
               <Placeholder
+                src={aboutImages.coffee.src}
+                alt={aboutImages.coffee.alt}
                 art="coffee"
                 tone="cocoa"
                 aspect="aspect-square"
                 rounded="rounded-3xl"
+                sizes="220px"
                 className="border-4 border-cream shadow-lift"
                 label="A cup of our filter coffee"
               />
             </div>
             <div className="absolute -left-4 -top-6 hidden w-36 sm:block lg:-left-10">
               <Placeholder
+                src={aboutImages.macaron.src}
+                alt={aboutImages.macaron.alt}
                 art="macaron"
                 tone="blush"
                 aspect="aspect-square"
                 rounded="rounded-2xl"
+                sizes="160px"
                 className="border-4 border-cream shadow-lift rotate-[-4deg]"
                 label="Close-up of macarons"
               />

@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { artIcons, IconCamera } from "@/components/icons";
 
 // Tone → gradient + ink colours. `dark` tiles flip caption/tag to light ink.
+// The gradient doubles as the image's load-state background.
 const tones = {
   blush: { bg: "linear-gradient(150deg,#F6E1DA 0%,#EBC6BB 55%,#E0B2A6 100%)", ink: "#9A5A4E", dark: false },
   rose: { bg: "linear-gradient(150deg,#EEC9C0 0%,#DDA396 60%,#CE8B7D 100%)", ink: "#8A4A3E", dark: false },
@@ -15,12 +17,15 @@ const tones = {
 };
 
 /**
- * Art-directed image placeholder.
- * Renders a designed tile (gradient + grain + pastry line-art) and, unless
- * hidden, the exact photograph that belongs here — so the café owner can drop
- * in real @ambroziacafeandpatisserie imagery without guessing.
+ * Image tile with a designed fallback.
+ * - With `src`: renders an optimised next/image (object-cover), over a warm
+ *   gradient that shows only during load.
+ * - Without `src`: renders the art-directed placeholder (gradient + pastry
+ *   line-art + the exact shot description) so any future slot is self-documenting.
  */
 export default function Placeholder({
+  src,
+  alt,
   art = "macaron",
   tone = "sand",
   label,
@@ -30,6 +35,8 @@ export default function Placeholder({
   iconClassName = "",
   float = false,
   showTag = true,
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, 33vw",
   children,
 }) {
   const reduce = useReducedMotion();
@@ -41,59 +48,70 @@ export default function Placeholder({
     <div
       className={`grain relative isolate overflow-hidden ${rounded} ${aspect} ${className}`}
       style={{ background: t.bg }}
-      role="img"
-      aria-label={label || `${art} photograph placeholder`}
+      role={src ? undefined : "img"}
+      aria-label={src ? undefined : label || `${art} photograph placeholder`}
     >
       {/* soft top-light sheen */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(90% 70% at 50% 0%, rgba(255,255,255,0.28), transparent 60%)",
+            "radial-gradient(90% 70% at 50% 0%, rgba(255,255,255,0.22), transparent 60%)",
         }}
         aria-hidden="true"
       />
 
-      {/* large decorative line-art */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center"
-        style={{ color: inkSoft }}
-        aria-hidden="true"
-        animate={float && !reduce ? { y: [0, -10, 0] } : undefined}
-        transition={
-          float && !reduce
-            ? { duration: 7, repeat: Infinity, ease: "easeInOut" }
-            : undefined
-        }
-      >
-        <Art className={`h-2/5 w-2/5 ${iconClassName}`} strokeWidth={1} />
-      </motion.div>
-
-      {/* corner monogram for a finished, branded feel */}
-      <span
-        className="absolute right-4 top-4 font-display text-sm italic"
-        style={{ color: t.dark ? "rgba(235,217,196,0.55)" : "rgba(42,32,25,0.4)" }}
-        aria-hidden="true"
-      >
-        Ambrozia
-      </span>
-
-      {/* art-direction caption */}
-      {showTag && label && (
-        <div className="absolute inset-x-3 bottom-3">
-          <div
-            className="flex items-center gap-2 rounded-2xl px-3.5 py-2.5 backdrop-blur-sm"
-            style={{
-              background: t.dark ? "rgba(20,14,10,0.34)" : "rgba(251,246,239,0.55)",
-              color: t.ink,
-            }}
+      {src ? (
+        <Image
+          src={src}
+          alt={alt || label || ""}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="z-[2] object-cover"
+        />
+      ) : (
+        <>
+          {/* large decorative line-art */}
+          <motion.div
+            className="absolute inset-0 z-[2] flex items-center justify-center"
+            style={{ color: inkSoft }}
+            aria-hidden="true"
+            animate={float && !reduce ? { y: [0, -10, 0] } : undefined}
+            transition={
+              float && !reduce
+                ? { duration: 7, repeat: Infinity, ease: "easeInOut" }
+                : undefined
+            }
           >
-            <IconCamera size={15} className="shrink-0 opacity-80" />
-            <span className="font-sans text-[0.7rem] leading-snug tracking-wide">
-              {label}
-            </span>
-          </div>
-        </div>
+            <Art className={`h-2/5 w-2/5 ${iconClassName}`} strokeWidth={1} />
+          </motion.div>
+
+          <span
+            className="absolute right-4 top-4 z-[2] font-display text-sm italic"
+            style={{ color: t.dark ? "rgba(235,217,196,0.55)" : "rgba(42,32,25,0.4)" }}
+            aria-hidden="true"
+          >
+            Ambrozia
+          </span>
+
+          {showTag && label && (
+            <div className="absolute inset-x-3 bottom-3 z-[3]">
+              <div
+                className="flex items-center gap-2 rounded-2xl px-3.5 py-2.5 backdrop-blur-sm"
+                style={{
+                  background: t.dark ? "rgba(20,14,10,0.34)" : "rgba(251,246,239,0.55)",
+                  color: t.ink,
+                }}
+              >
+                <IconCamera size={15} className="shrink-0 opacity-80" />
+                <span className="font-sans text-[0.7rem] leading-snug tracking-wide">
+                  {label}
+                </span>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {children}

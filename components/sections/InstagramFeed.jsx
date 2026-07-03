@@ -8,12 +8,12 @@ import Reveal from "@/components/ui/Reveal";
 import { IconInstagram } from "@/components/icons";
 
 const tiles = [
-  { art: "macaron", tone: "blush", photo: "IG post — macaron close-up" },
-  { art: "cakeSlice", tone: "caramel", photo: "IG post — celebration cake" },
-  { art: "coffee", tone: "cocoa", photo: "IG post — coffee & pastry flat-lay" },
-  { art: "cupcake", tone: "rose", photo: "IG reel — piping in progress" },
-  { art: "cheesecake", tone: "sand", photo: "IG post — cheesecake slice" },
-  { art: "croissant", tone: "gold", photo: "IG post — fresh croissants" },
+  { art: "macaron", tone: "blush", img: "/images/macarons-stack.jpg", alt: "Stack of pastel macarons" },
+  { art: "cakeSlice", tone: "caramel", img: "/images/drip-cake.jpg", alt: "Chocolate drip celebration cake" },
+  { art: "coffee", tone: "cocoa", img: "/images/coffee-green.jpg", alt: "Coffee with latte art" },
+  { art: "cupcake", tone: "rose", img: "/images/cupcakes-pastel.jpg", alt: "Pastel swirled cupcakes" },
+  { art: "cheesecake", tone: "sand", img: "/images/choc-cream.jpg", alt: "Chocolate cream pastry" },
+  { art: "croissant", tone: "gold", img: "/images/chef-flour.jpg", alt: "Baker dusting flour while baking" },
 ];
 
 export default function InstagramFeed() {
@@ -53,10 +53,13 @@ export default function InstagramFeed() {
               aria-label={`View ${business.socials.instagramHandle} on Instagram`}
             >
               <Placeholder
+                src={t.img}
+                alt={t.alt}
                 art={t.art}
                 tone={t.tone}
                 aspect="aspect-square"
                 rounded="rounded-2xl"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 showTag={false}
               />
               <div className="absolute inset-0 flex items-center justify-center bg-espresso/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-300 group-hover:opacity-100">

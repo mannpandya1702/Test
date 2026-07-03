@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { business, waLink, macaronFlavours } from "@/lib/data";
+import { business, waLink, macaronFlavours, heroImage } from "@/lib/data";
 import { IconWhatsApp, IconStar, IconArrow } from "@/components/icons";
 import Button from "@/components/ui/Button";
 import Placeholder from "@/components/ui/Placeholder";
@@ -128,9 +128,12 @@ export default function Hero() {
         >
           <div className="relative mx-auto max-w-md lg:max-w-none">
             <Placeholder
+              src={heroImage.src}
+              alt={heroImage.alt}
               art="macaron"
               tone="blush"
-              float
+              priority
+              sizes="(max-width: 1024px) 90vw, 45vw"
               aspect="aspect-[4/5]"
               rounded="rounded-[2.5rem]"
               className="shadow-lift ring-1 ring-espresso/[0.04]"

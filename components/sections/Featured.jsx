@@ -34,10 +34,13 @@ export default function Featured() {
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <Placeholder
+                      src={item.img}
+                      alt={item.alt}
                       art={item.art}
                       tone={item.tone}
                       aspect="aspect-[4/5]"
                       rounded="rounded-none"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       showTag={false}
                     />
                   </motion.div>
