@@ -72,6 +72,31 @@ WhatsApp deep-links (`wa.me`) are pre-filled with on-brand messages; the
 enquiry form composes the visitor's details into a WhatsApp message — no
 backend required.
 
+## Deploying to Vercel
+
+The project is zero-config on Vercel (Next.js is auto-detected).
+
+**Option A — connect the repo (recommended, gives auto-deploys):**
+1. Go to <https://vercel.com/new>, import this GitHub repository.
+2. Framework preset **Next.js**, build `next build`, output auto. Deploy.
+3. Every push to the branch then deploys a preview; `main` deploys production.
+
+**Option B — one-off from the CLI:**
+```bash
+npm i -g vercel
+vercel --prod        # first run links/creates the project interactively
+# or non-interactively with a token:
+vercel --prod --yes --token "$VERCEL_TOKEN"
+```
+
+No environment variables are required for the current build.
+
+## Owner proposal
+
+A short, agency-style growth proposal for the café owners lives in
+[`docs/PROPOSAL.md`](docs/PROPOSAL.md) — website trust, WhatsApp ordering, cake
+enquiry automation, Google-review automation, birthday reminders and future AI.
+
 ---
 
 *Design intent: a ₹1,00,000-class custom website. Swap the placeholder tiles
